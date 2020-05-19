@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "role")
-public class Role implements GrantedAuthority {
+public class Role{
 
     @Id
     @Column(name = "id")
@@ -20,11 +20,6 @@ public class Role implements GrantedAuthority {
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
-
-    @Override
-    public String getAuthority() {
-        return getName();
-    }
 
     public Long getRole_id() {
         return role_id;

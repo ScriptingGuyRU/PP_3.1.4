@@ -31,10 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("serverSecretAdmin")
                 .password(passwordEncoder.encode("secretPassword"))
                 .roles("ADMIN");
-        auth.inMemoryAuthentication()
-                .withUser("serverSecretUser")
-                .password(passwordEncoder.encode("secretPassword"))
-                .roles("USER");
     }
 
     @Override

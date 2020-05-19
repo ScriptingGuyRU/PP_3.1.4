@@ -4,6 +4,7 @@ $(document).ready(function () {
     addUser();
     validatorAdd('#formAdd');
     validatorAdd('#editUserForm');
+    getAuthUser();
 });
 
 // Ajax get all users
@@ -18,6 +19,23 @@ function getJson3() {
             data.forEach(function (element) {
                 addRow(element);
             })
+        },
+        error: function () {
+            alert("Ошибка выполнения");
+        }
+    });
+}
+
+// Ajax get Auth user
+function getAuthUser() {
+    $.ajax({
+        url: 'http://localhost:8080/api/auth',
+        cache: false,
+        type: 'GET',
+        contentType: "application/json;charset=UTF-8",
+        dataType: 'json',
+        success: function (data2) {
+            addRowAuth(data2);
         },
         error: function () {
             alert("Ошибка выполнения");
@@ -44,6 +62,27 @@ function addRow(user) {
                     <td><p><button id="deleteUser_${id}" name="deleteUserBtn" class="btn btn-danger delete-user" data-toggle="modal">delete</button></p></td>
                 </tr>'`;
     $('#usersTableTbody').append(addTd);
+}
+
+//создание таблицы user
+function addRowAuth(user) {
+    let id = user.id;
+    let name = user.userName;
+    let lastName = user.lastName;
+    let email = user.email;
+    let age = user.age;
+    let roles = user.roles;
+    let addTd = `<tr>
+                    <td>${id}</td>
+                    <td>${name}</td>
+                    <td>${lastName}</td>
+                    <td>${age}</td>
+                    <td>${email}</td>
+                    <td>${roles}</td>
+                </tr>'`;
+    $('#usersAuthTableTbody').append(addTd);
+    $('#headerEmail').html(email);
+    $('#headerRoles').html(roles + " ");
 }
 
 // Add user
@@ -269,9 +308,5 @@ function validatorAdd(id) {
         }
     });
 };
-
-// $("input").focus(function () {
-//     validatorAdd('#formAdd');
-// });
 
 

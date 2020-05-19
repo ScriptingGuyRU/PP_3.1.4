@@ -36,7 +36,7 @@ public class RestController {
 
     @GetMapping
     public ResponseEntity<?> read() {
-        final List<UserDto> userList = userService.findAll();
+        List<UserDto> userList = userService.findAll();
 
         return !userList.isEmpty() || userList != null ?
                 new ResponseEntity<>(userList, HttpStatus.OK) :
@@ -69,6 +69,7 @@ public class RestController {
                 new ResponseEntity<>(roleDto, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody UserDto userDto) {

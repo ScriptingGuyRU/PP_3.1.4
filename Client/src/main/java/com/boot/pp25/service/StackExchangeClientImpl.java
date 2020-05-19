@@ -3,9 +3,11 @@ package com.boot.pp25.service;
 import com.boot.pp25.dto.RoleDto;
 import com.boot.pp25.dto.UserDto;
 import com.boot.pp25.service.abstractServ.StackExchangeClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,12 +17,18 @@ import java.util.Optional;
 @Component
 public class StackExchangeClientImpl implements StackExchangeClient {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
+    private PasswordEncoder passwordEncoder;
     private final String ADRESS_URL = "http://localhost:8081/api/";
+
+    @Autowired
+    public StackExchangeClientImpl(RestTemplate restTemplate, PasswordEncoder passwordEncoder) {
+        this.restTemplate = restTemplate;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<UserDto> findAll() {
-//        UsersDtoList allUsersList = restTemplate.getForObject(ADRESS_URL, UsersDtoList.class);
         ResponseEntity<List<UserDto>> response =
                 restTemplate.exchange(ADRESS_URL,
                         HttpMethod.GET,
